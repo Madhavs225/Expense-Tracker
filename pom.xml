@@ -28,20 +28,21 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Mockito for testing -->
+        <!-- Mockito temporarily removed to avoid network resolution issues; restore later when network stable -->
+        <!--
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
-        
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
+        -->
 
         <!-- (Optional) SLF4J API and simple logger; can switch later -->
         <dependency>
@@ -59,6 +60,14 @@
                 <version>3.11.0</version>
                 <configuration>
                     <release>17</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.expensetracker.view.AppLauncher</mainClass>
                 </configuration>
             </plugin>
             <plugin>

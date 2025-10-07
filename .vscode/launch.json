@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run Expense Tracker",
+      "request": "launch",
+      "projectName": "expense-tracker",
+      "mainClass": "com.expensetracker.view.AppLauncher",
+      "cwd": "${workspaceFolder}",
+      "vmArgs": "",
+      "args": ""
+    }
+  ]
+}

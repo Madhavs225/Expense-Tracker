@@ -1,6 +1,6 @@
 package com.expensetracker.view;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 /**
  * Application launcher selecting login first.

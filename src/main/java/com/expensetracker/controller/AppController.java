@@ -1,21 +1,26 @@
 package com.expensetracker.controller;
 
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
+import com.expensetracker.background.BackgroundTaskManager;
+import com.expensetracker.background.BudgetAlertService;
 import com.expensetracker.dao.impl.CategoryJdbcDAO;
 import com.expensetracker.dao.impl.ExpenseJdbcDAO;
 import com.expensetracker.dao.impl.UserAccountJdbcDAO;
 import com.expensetracker.model.Category;
 import com.expensetracker.model.Expense;
 import com.expensetracker.model.PaymentMethod;
-import com.expensetracker.report.*;
+import com.expensetracker.report.CsvExportStrategy;
+import com.expensetracker.report.DailyReport;
+import com.expensetracker.report.DailyReportGenerator;
+import com.expensetracker.report.WeeklyReport;
+import com.expensetracker.report.WeeklyReportGenerator;
+import com.expensetracker.report.WeeklyReportRequest;
+import com.expensetracker.service.AuthService;
 import com.expensetracker.service.CategoryService;
 import com.expensetracker.service.ExpenseService;
-import com.expensetracker.service.AuthService;
-import com.expensetracker.background.BackgroundTaskManager;
-import com.expensetracker.background.BudgetAlertService;
 import com.expensetracker.util.FileManager;
 import com.expensetracker.util.LoggerUtil;
 
@@ -131,13 +136,11 @@ public class AppController {
 
     // Report generation
     public DailyReport generateDailyReport(LocalDate date) {
-        DailyReportRequest request = new DailyReportRequest(date);
-        return dailyReportGenerator.generate(request);
+        return dailyReportGenerator.generate(date);
     }
 
     public WeeklyReport generateWeeklyReport(LocalDate startDate, LocalDate endDate) {
-        WeeklyReportRequest request = new WeeklyReportRequest(startDate, endDate);
-        return weeklyReportGenerator.generate(request);
+        return weeklyReportGenerator.generate(new WeeklyReportRequest(startDate, endDate));
     }
 
     public void exportDailyReportToCsv(DailyReport report) {
