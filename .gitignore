@@ -1,0 +1,15 @@
+# Build outputs
+/target/
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Logs
+logs/
+
+# Local override config
+config.local.properties
