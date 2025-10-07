@@ -1,13 +1,13 @@
 package com.expensetracker.controller;
 
+import java.time.LocalDate;
+
 import com.expensetracker.dao.impl.CategoryJdbcDAO;
 import com.expensetracker.dao.impl.ExpenseJdbcDAO;
+import com.expensetracker.report.DailyReport;
+import com.expensetracker.report.DailyReportGenerator;
 import com.expensetracker.service.CategoryService;
 import com.expensetracker.service.ExpenseService;
-import com.expensetracker.report.DailyReportGenerator;
-import com.expensetracker.report.DailyReport;
-import com.expensetracker.dao.impl.ExpenseJdbcDAO;
-import java.time.LocalDate;
 
 /**
  * Central application controller wiring services (basic bootstrap placeholder).
@@ -35,5 +35,23 @@ public class AppController {
 
     public DailyReport generateDailyReport(LocalDate date) {
         return dailyReportGenerator.generate(date);
+    }
+
+    // Convenience methods for UI
+    public java.util.List<com.expensetracker.model.Category> getAllCategories() {
+        return categoryService.listCategories();
+    }
+
+    public void addCategory(com.expensetracker.model.Category category) {
+        categoryService.createCategory(category.getName(), category.getMonthlyBudgetLimit());
+    }
+
+    public java.util.List<com.expensetracker.model.Expense> getAllExpenses() {
+        return expenseService.listRecent(100); // Get recent 100 expenses
+    }
+
+    public void addExpense(com.expensetracker.model.Expense expense) {
+        expenseService.addExpense(expense.getCategory(), expense.getDate(),
+                expense.getAmount(), expense.getPaymentMethod(), expense.getDescription());
     }
 }
