@@ -78,7 +78,7 @@ public class Expense {
         if (amount == null || amount.signum() <= 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
-        this.amount = amount.setScale(2, BigDecimal.ROUND_HALF_UP);
+        this.amount = amount.setScale(2, java.math.RoundingMode.HALF_UP);
     }
 
     public PaymentMethod getPaymentMethod() {

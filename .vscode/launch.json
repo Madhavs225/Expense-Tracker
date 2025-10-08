@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "LoginFrame",
+      "request": "launch",
+      "mainClass": "com.expensetracker.view.LoginFrame",
+      "projectName": "expense-tracker"
+    },
+    {
+      "type": "java",
+      "name": "LoginFrame",
+      "request": "launch",
+      "mainClass": "LoginFrame",
+      "projectName": "Expense-Tracker_f9585e0c"
+    },
+    {
+      "type": "java",
       "name": "Run Expense Tracker",
       "request": "launch",
       "projectName": "expense-tracker",
