@@ -1,6 +1,8 @@
 package com.expensetracker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,6 +13,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,6 +30,7 @@ import com.expensetracker.controller.AppController;
 import com.expensetracker.model.Category;
 import com.expensetracker.model.Expense;
 import com.expensetracker.model.PaymentMethod;
+import com.expensetracker.view.theme.AppTheme;
 
 /**
  * Panel for managing expenses (add, view, edit)
@@ -42,73 +48,160 @@ public class ExpensePanel extends JPanel {
 
     public ExpensePanel(AppController controller) {
         this.controller = controller;
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(15, 15));
+        setBackground(AppTheme.BACKGROUND_COLOR);
+        setBorder(AppTheme.PANEL_BORDER);
 
-        // Input form
-        JPanel inputPanel = new JPanel(new GridBagLayout());
+        // Main container
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(AppTheme.BACKGROUND_COLOR);
+
+        // Header
+        JLabel headerLabel = new JLabel("Manage Expenses");
+        headerLabel.setFont(AppTheme.HEADER_FONT);
+        headerLabel.setForeground(AppTheme.TEXT_COLOR);
+        headerLabel.setAlignmentX(LEFT_ALIGNMENT);
+        mainPanel.add(headerLabel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+
+        // Input form card
+        JPanel inputCard = new JPanel(new GridBagLayout());
+        inputCard.setBackground(AppTheme.CARD_COLOR);
+        inputCard.setBorder(AppTheme.CARD_BORDER);
+        inputCard.setAlignmentX(LEFT_ALIGNMENT);
+        
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(8, 8, 8, 8);
         gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Date
         gbc.gridx = 0;
         gbc.gridy = 0;
-        inputPanel.add(new JLabel("Date:"), gbc);
+        gbc.weightx = 0.0;
+        JLabel dateLabel = new JLabel("Date:");
+        dateLabel.setFont(AppTheme.LABEL_FONT);
+        dateLabel.setForeground(AppTheme.TEXT_COLOR);
+        inputCard.add(dateLabel, gbc);
+        
         gbc.gridx = 1;
-        dateField = new JTextField(LocalDate.now().toString(), 12);
-        inputPanel.add(dateField, gbc);
+        gbc.weightx = 1.0;
+        dateField = new JTextField(LocalDate.now().toString(), 20);
+        AppTheme.styleTextField(dateField);
+        inputCard.add(dateField, gbc);
 
         // Amount
         gbc.gridx = 0;
         gbc.gridy = 1;
-        inputPanel.add(new JLabel("Amount:"), gbc);
+        gbc.weightx = 0.0;
+        JLabel amountLabel = new JLabel("Amount:");
+        amountLabel.setFont(AppTheme.LABEL_FONT);
+        amountLabel.setForeground(AppTheme.TEXT_COLOR);
+        inputCard.add(amountLabel, gbc);
+        
         gbc.gridx = 1;
-        amountField = new JTextField(12);
-        inputPanel.add(amountField, gbc);
+        gbc.weightx = 1.0;
+        amountField = new JTextField(20);
+        AppTheme.styleTextField(amountField);
+        inputCard.add(amountField, gbc);
 
         // Category
         gbc.gridx = 0;
         gbc.gridy = 2;
-        inputPanel.add(new JLabel("Category:"), gbc);
+        gbc.weightx = 0.0;
+        JLabel categoryLabel = new JLabel("Category:");
+        categoryLabel.setFont(AppTheme.LABEL_FONT);
+        categoryLabel.setForeground(AppTheme.TEXT_COLOR);
+        inputCard.add(categoryLabel, gbc);
+        
         gbc.gridx = 1;
+        gbc.weightx = 1.0;
         categoryCombo = new JComboBox<>();
+        AppTheme.styleComboBox(categoryCombo);
         loadCategories();
-        inputPanel.add(categoryCombo, gbc);
+        inputCard.add(categoryCombo, gbc);
 
         // Payment Method
         gbc.gridx = 0;
         gbc.gridy = 3;
-        inputPanel.add(new JLabel("Payment:"), gbc);
+        gbc.weightx = 0.0;
+        JLabel paymentLabel = new JLabel("Payment Method:");
+        paymentLabel.setFont(AppTheme.LABEL_FONT);
+        paymentLabel.setForeground(AppTheme.TEXT_COLOR);
+        inputCard.add(paymentLabel, gbc);
+        
         gbc.gridx = 1;
+        gbc.weightx = 1.0;
         paymentCombo = new JComboBox<>(PaymentMethod.values());
-        inputPanel.add(paymentCombo, gbc);
+        AppTheme.styleComboBox(paymentCombo);
+        inputCard.add(paymentCombo, gbc);
 
         // Description
         gbc.gridx = 0;
         gbc.gridy = 4;
-        inputPanel.add(new JLabel("Description:"), gbc);
+        gbc.weightx = 0.0;
+        JLabel descLabel = new JLabel("Description:");
+        descLabel.setFont(AppTheme.LABEL_FONT);
+        descLabel.setForeground(AppTheme.TEXT_COLOR);
+        inputCard.add(descLabel, gbc);
+        
         gbc.gridx = 1;
+        gbc.weightx = 1.0;
         descriptionField = new JTextField(20);
-        inputPanel.add(descriptionField, gbc);
+        AppTheme.styleTextField(descriptionField);
+        inputCard.add(descriptionField, gbc);
 
         // Buttons
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
-        JPanel buttonPanel = new JPanel();
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        buttonPanel.setBackground(AppTheme.CARD_COLOR);
+        
         JButton addBtn = new JButton("Add Expense");
+        AppTheme.styleButton(addBtn, true);
+        
         JButton refreshBtn = new JButton("Refresh");
+        AppTheme.styleButton(refreshBtn, false);
+        
         buttonPanel.add(addBtn);
         buttonPanel.add(refreshBtn);
-        inputPanel.add(buttonPanel, gbc);
+        inputCard.add(buttonPanel, gbc);
 
-        add(inputPanel, BorderLayout.NORTH);
+        mainPanel.add(inputCard);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
 
-        // Expense list
+        // Expense list card
+        JPanel listCard = new JPanel(new BorderLayout(10, 10));
+        listCard.setBackground(AppTheme.CARD_COLOR);
+        listCard.setBorder(AppTheme.CARD_BORDER);
+        listCard.setAlignmentX(LEFT_ALIGNMENT);
+        
+        JLabel listLabel = new JLabel("Recent Expenses");
+        listLabel.setFont(AppTheme.HEADER_FONT);
+        listLabel.setForeground(AppTheme.TEXT_COLOR);
+        listCard.add(listLabel, BorderLayout.NORTH);
+        
         listModel = new DefaultListModel<>();
         expenseList = new JList<>(listModel);
+        expenseList.setFont(AppTheme.LABEL_FONT);
+        expenseList.setBackground(AppTheme.CARD_COLOR);
+        expenseList.setForeground(AppTheme.TEXT_COLOR);
+        expenseList.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         loadExpenses();
-        add(new JScrollPane(expenseList), BorderLayout.CENTER);
+        
+        JScrollPane scrollPane = new JScrollPane(expenseList);
+        scrollPane.setBorder(BorderFactory.createLineBorder(AppTheme.BORDER_COLOR, 1));
+        scrollPane.setPreferredSize(new Dimension(0, 300));
+        listCard.add(scrollPane, BorderLayout.CENTER);
+
+        mainPanel.add(listCard);
+
+        add(mainPanel, BorderLayout.CENTER);
 
         // Event handlers
         addBtn.addActionListener(new AddExpenseListener());
