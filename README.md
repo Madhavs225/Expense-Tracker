@@ -80,13 +80,13 @@ db.password=CHANGE_ME
 
 Create `config.local.properties` (DO NOT COMMIT) with your real credentials, e.g.:
 ```
-db.user=asus
-db.password=3005
+db.user=YOURUSERNAME
+db.password=YOURPASS
 ```
 Or export environment variables (Windows PowerShell example):
 ```powershell
-$env:DB_USER="asus"
-$env:DB_PASSWORD="3005"
+$env:DB_USER="USER"
+$env:DB_PASSWORD="PASS"
 ```
 
 ### 4. Build
