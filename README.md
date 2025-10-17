@@ -10,6 +10,13 @@ Java desktop application (Swing + JDBC + MySQL) for tracking daily expenses, cat
 - Daily report generation with CSV export (extensible structure for weekly/monthly)
 - Configurable via properties file with secure local override support
 
+## Screenshots
+
+<img width="683" height="526" alt="image" src="https://github.com/user-attachments/assets/e98bae7c-8116-4407-a1cc-4d2dd7c8dadc" />
+
+<img width="1242" height="880" alt="image" src="https://github.com/user-attachments/assets/d1dafdde-9ebc-463f-a51c-169062cc9a00" />
+
+
 ## Tech Stack
 
 - Java 24
